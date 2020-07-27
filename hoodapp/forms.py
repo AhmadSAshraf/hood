@@ -1,33 +1,39 @@
 from django import forms
-from .models import Profile, Business, Neighborhood, Post, Comment
+from .models import Admin_Profile, Neighbourhood, Facility, Business, Post
 
-    
-class ProfileForm(forms.ModelForm):
+class AdminProfileForm(forms.ModelForm):
     class Meta:
-        model = Profile
-        exclude = ['user','neighborhood','name'] 
-        
+        model = Admin_Profile
+        exclude = ['created', 'this_user']
 
 
 class NeighbourhoodForm(forms.ModelForm):
     class Meta:
-        model = Neighborhood
-        fields = ('name','hood_image','location', 'occupants')
+        model = Neighbourhood
+        exclude = ['created', 'admin', 'occupants_count']
+
+
+class AddResidentForm(forms.Form):
+    name = forms.CharField(label='Resident name', max_length=50)
+    username = forms.CharField(label='Username', max_length=50)
+    email = forms.EmailField()    
+
+class FacilityForm(forms.ModelForm):
+    class Meta:
+        model = Facility
+        exclude = ['created', 'hood']
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(widget=forms.PasswordInput)
+    new_password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput) 
 
 class BusinessForm(forms.ModelForm):
     class Meta:
         model = Business
-        exclude = ['user', 'neighborhood']
+        exclude = ['created', 'hood', 'owner']
 
-class PostForm(forms.ModelForm):
+class MakePostForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ['user', 'neighborhood']
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ('comment',)
-        widgets = {
-            'comment': forms.Textarea(attrs={'cols': 30, 'rows': 3}),
-   }
+        exclude = ['created', 'posted_by', 'hood']
