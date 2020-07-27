@@ -51,6 +51,9 @@ python manage.py test
 
 Open the app on your browser, by default on ``` http://127.0.0.1:8000/ ```
 
+## Live App URL
+[Hoodke](https://hoodke.herokuapp.com/)
+
 ## Technologies Used
 
 * Django
